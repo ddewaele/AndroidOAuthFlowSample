@@ -53,10 +53,10 @@ public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Void> {
 			consumer.setTokenWithSecret(token, secret);
 			context.startActivity(new Intent(context,OAuthFlowApp.class));
 
-			Log.i(TAG, "OAUTH STAGE TWO OK!");
+			Log.i(TAG, "OAuth - Access Token Retrieved");
 			
 		} catch (Exception e) {
-			Log.e(TAG, "OAUTH STAGE TWO ERROR", e);
+			Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
 		}
 
 		return null;
