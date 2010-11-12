@@ -13,4 +13,6 @@ In the Constants class, replace
 	public static final String CONSUMER_SECRET = "anonymous";
 	
 with your Google registered domain and secret.  
+
+Also replace the domain parameter in the AUTHORIZE_URL to correspond to your registered domain.
  
