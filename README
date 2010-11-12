@@ -1,0 +1,9 @@
+Sample Android app that does the OAuth Dance.
+
+Goes through all the steps of the OAuth Flow
+
+* Get Request Token
+* Authorize Token
+* Get Access Token
+* Perform Google API call (retrieve contacts).
+ 
