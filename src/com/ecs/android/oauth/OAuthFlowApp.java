@@ -35,16 +35,16 @@ import android.widget.TextView;
  */
 public class OAuthFlowApp extends Activity {
 
-	private static final int PICK_CONTACT = 0;
 	final String TAG = getClass().getName();
 	private SharedPreferences prefs;
-	
+	private TextView textView; 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+        textView = (TextView) findViewById(R.id.response_code);
+        
         Button launchOauth = (Button) findViewById(R.id.btn_launch_oauth);
         Button clearCredentials = (Button) findViewById(R.id.btn_clear_credentials);
         
@@ -66,47 +66,17 @@ public class OAuthFlowApp extends Activity {
     }
 
 	private void performApiCall() {
-		TextView textView = (TextView) findViewById(R.id.response_code);
+		
 		
 		String jsonOutput = "";
         try {
-        	jsonOutput = doGet(Constants.API_REQUEST,getConsumer(this.prefs));
-        	System.out.println("jsonOutput : " + jsonOutput);
-        	JSONObject jsonResponse = new JSONObject(jsonOutput);
-        	JSONObject m = (JSONObject)jsonResponse.get("feed");
-        	JSONArray entries =(JSONArray)m.getJSONArray("entry");
-        	String contacts="";
-        	for (int i=0 ; i<entries.length() ; i++) {
-        		JSONObject entry = entries.getJSONObject(i);
-        		JSONObject title = entry.getJSONObject("title");
-        		if (title.getString("$t")!=null && title.getString("$t").length()>0) {
-        			contacts+=title.getString("$t") + "\n";
-        		}
-        	}
+        	doGet(Constants.API_REQUEST,getConsumer(this.prefs));
         	Log.i(TAG,jsonOutput);
-        	textView.setText(contacts);
 		} catch (Exception e) {
 			Log.e(TAG, "Error executing request",e);
-			textView.setText("Error retrieving contacts : " + jsonOutput);
+			textView.setText("Error retrieving location : " + jsonOutput);
 		}
 	}
-	
-	public void onActivityResult(int reqCode, int resultCode, Intent data) {
-		  super.onActivityResult(reqCode, resultCode, data);
-
-		  switch (reqCode) {
-		    case (PICK_CONTACT) :
-		      if (resultCode == Activity.RESULT_OK) {
-		        Uri contactData = data.getData();
-		        Cursor c =  managedQuery(contactData, null, null, null, null);
-		        if (c.moveToFirst()) {
-		          String name = c.getString(c.getColumnIndexOrThrow(People.NAME));
-		          Log.i(TAG,"Response : " + "Selected contact : " + name);
-		        }
-		      }
-		      break;
-		  }
-		}	
 	
     private void clearCredentials() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -132,12 +102,13 @@ public class OAuthFlowApp extends Activity {
     	consumer.sign(request);
     	HttpResponse response = httpclient.execute(request);
     	Log.i(TAG,"Statusline : " + response.getStatusLine());
+    	textView.setText("Response status : " + response.getStatusLine());
     	InputStream data = response.getEntity().getContent();
     	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(data));
         String responeLine;
         StringBuilder responseBuilder = new StringBuilder();
         while ((responeLine = bufferedReader.readLine()) != null) {
-        	responseBuilder.append(responeLine);
+        	responseBuilder.append(responeLine + "\n");
         }
         Log.i(TAG,"Response : " + responseBuilder.toString());
         return responseBuilder.toString();

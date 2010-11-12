@@ -1,9 +1,16 @@
-Sample Android app that does the OAuth Dance.
+Sample Android app that does the OAuth Dance for the Latitude API.
 
 Goes through all the steps of the OAuth Flow
 
 * Get Request Token
 * Authorize Token
 * Get Access Token
-* Perform Google API call (retrieve contacts).
+* Perform Google API call (retrieve current location).
+
+In the Constants class, replace 
+
+	public static final String CONSUMER_KEY = "anonymous";
+	public static final String CONSUMER_SECRET = "anonymous";
+	
+with your Google registered domain and secret.  
  
