@@ -1,5 +1,9 @@
 Sample Android app that does the OAuth Dance for the Latitude API.
 
+Accompanying article (based on google contacts api instead of latitude api) can be found here : 
+
+http://blog.doityourselfandroid.com/2010/11/10/oauth-flow-in-android-app/
+
 Goes through all the steps of the OAuth Flow
 
 * Get Request Token
