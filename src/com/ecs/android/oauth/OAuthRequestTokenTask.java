@@ -1,7 +1,5 @@
 package com.ecs.android.oauth;
 
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,8 +20,6 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, Void> {
 
 	final String TAG = getClass().getName();
 	private Context	context;
-	private OAuthProvider provider;
-	private OAuthConsumer consumer;
 
 	/**
 	 * 
@@ -36,10 +32,8 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, Void> {
 	 * @param 	consumer
 	 * 			The OAuthConsumer object
 	 */
-	public OAuthRequestTokenTask(Context context,OAuthConsumer consumer,OAuthProvider provider) {
+	public OAuthRequestTokenTask(Context context) {
 		this.context = context;
-		this.consumer = consumer;
-		this.provider = provider;
 	}
 
 	/**
@@ -51,10 +45,9 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... params) {
 		
 		try {
-			Log.i(TAG, "Retrieving request token from Google servers");
-			final String url = provider.retrieveRequestToken(consumer, Constants.OAUTH_CALLBACK_URL);
-			Log.i(TAG, "Popping a browser with the authorize URL : " + url);
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_FROM_BACKGROUND);
+			Log.i(TAG, "Redirecting to our external oauth consumer site");
+			Log.i(TAG, "Popping a browser with the authorize URL : " + Constants.REQUEST_URL);
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.REQUEST_URL)).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_FROM_BACKGROUND);
 			context.startActivity(intent);
 			
 		} catch (Exception e) {

@@ -21,7 +21,7 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="x-oauthflow" android:host="callback" />
+				<data android:scheme="x-oauthflow-remote" android:host="callback" />
 			</intent-filter>
 		</activity>
 

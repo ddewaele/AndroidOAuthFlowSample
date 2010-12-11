@@ -11,18 +11,13 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Contacts.People;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -90,7 +85,8 @@ public class OAuthFlowApp extends Activity {
 	private OAuthConsumer getConsumer(SharedPreferences prefs) {
 		String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
 		String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
-		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET);
+		String consumer_secret = prefs.getString(Constants.CONSUMER_SECRET_KEY, "");
+		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY, consumer_secret);
 		consumer.setTokenWithSecret(token, secret);
 		return consumer;
 	}

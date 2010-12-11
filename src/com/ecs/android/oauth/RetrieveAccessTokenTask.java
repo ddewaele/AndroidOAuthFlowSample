@@ -3,6 +3,8 @@ package com.ecs.android.oauth;
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
+import oauth.signpost.basic.DefaultOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,14 +18,10 @@ public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Void> {
 	final String TAG = getClass().getName();
 	
 	private Context	context;
-	private OAuthProvider provider;
-	private OAuthConsumer consumer;
 	private SharedPreferences prefs;
 	
-	public RetrieveAccessTokenTask(Context context, OAuthConsumer consumer,OAuthProvider provider, SharedPreferences prefs) {
+	public RetrieveAccessTokenTask(Context context, SharedPreferences prefs) {
 		this.context = context;
-		this.consumer = consumer;
-		this.provider = provider;
 		this.prefs=prefs;
 	}
 
@@ -37,20 +35,19 @@ public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Void> {
 		final Uri uri = params[0];
 		
 		
-		final String oauth_verifier = uri.getQueryParameter(OAuth.OAUTH_VERIFIER);
+		String token = uri.getQueryParameter(OAuth.OAUTH_TOKEN);
+		String secret = uri.getQueryParameter(OAuth.OAUTH_TOKEN_SECRET);
+		String consumer_secret = uri.getQueryParameter(Constants.CONSUMER_SECRET_KEY);
 
 		try {
-			provider.retrieveAccessToken(consumer, oauth_verifier);
-
+			OAuthConsumer consumer =  new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY, consumer_secret);
+			consumer.setTokenWithSecret(token, secret);
 			final Editor edit = prefs.edit();
 			edit.putString(OAuth.OAUTH_TOKEN, consumer.getToken());
 			edit.putString(OAuth.OAUTH_TOKEN_SECRET, consumer.getTokenSecret());
+			edit.putString(Constants.CONSUMER_SECRET_KEY, consumer.getConsumerSecret());
 			edit.commit();
 			
-			String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
-			String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
-			
-			consumer.setTokenWithSecret(token, secret);
 			context.startActivity(new Intent(context,OAuthFlowApp.class));
 
 			Log.i(TAG, "OAuth - Access Token Retrieved");
