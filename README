@@ -1,8 +1,14 @@
-Sample Android app that does the OAuth Dance for the Latitude API.
+Sample Android app that delegates the OAuth Dance to an external server.
+That way, the Android app does not need to store the consumer secret in code.
+The OAuth dance consisting of 
 
-Accompanying article (based on google contacts api instead of latitude api) can be found here : 
+* fetching request token
+* authorizing request token
+* upgrading the access token
 
-http://blog.doityourselfandroid.com/2010/11/10/oauth-flow-in-android-app/
+is all done on a external server.
+
+Accompanying article will be posted at http://blog.doityourselfandroid.com
 
 Goes through all the steps of the OAuth Flow
 
@@ -14,9 +20,7 @@ Goes through all the steps of the OAuth Flow
 In the Constants class, replace 
 
 	public static final String CONSUMER_KEY = "anonymous";
-	public static final String CONSUMER_SECRET = "anonymous";
 	
-with your Google registered domain and secret.  
+with your Google registered domain.  
 
-Also replace the domain parameter in the AUTHORIZE_URL to correspond to your registered domain.
  

@@ -6,7 +6,7 @@ public class Constants {
 	public static final String CONSUMER_KEY 			= "ecommitconsulting.be";
 	
 	public static final String SCOPE 					= "https://www.googleapis.com/auth/latitude";
-	public static final String REQUEST_URL 				= "http://ecommitconsulting.be/docs.php";
+	public static final String REQUEST_URL 				= "http://ecommitconsulting.be/oauth.php";
 	
 	public static final String API_REQUEST 				= "https://www.googleapis.com/latitude/v1/location";
 	
