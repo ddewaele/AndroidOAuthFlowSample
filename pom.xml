@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ecs</groupId>
     <artifactId>AndroidOAuthFlowSample</artifactId>
@@ -9,26 +9,30 @@
         
     <dependencies>
         <dependency>
-            <groupId>android</groupId>
+            <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
-            <version>1.6_r3</version>
-           <scope>provided</scope>
+            <version>1.6_r2</version>
+            <scope>provided</scope>
         </dependency>
       <dependency>
         <groupId>oauth.signpost</groupId>
         <artifactId>signpost-core</artifactId>
         <version>1.2.1.1</version>
-        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>oauth.signpost</groupId>
         <artifactId>signpost-commonshttp4</artifactId>
         <version>1.2.1.1</version>
-        <scope>compile</scope>
-      </dependency>      
+      </dependency>    
+      <dependency>
+      	<groupId>org.json</groupId>
+      	<artifactId>json</artifactId>
+      	<version>20090211</version>
+      </dependency>
     </dependencies>
 
     <build>
+   		<finalName>${project.artifactId}</finalName>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
@@ -46,7 +50,6 @@
                 <version>2.8.3</version>
                 <configuration>
                     <sdk>
-                        <path>${env.ANDROID_HOME}</path>
                         <platform>1.6</platform>
                     </sdk>
                     <deleteConflictingFiles>true</deleteConflictingFiles>
